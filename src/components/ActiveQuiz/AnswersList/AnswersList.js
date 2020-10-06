@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import AnswerItem from './AnswerItem/AnswerItem';
 import classes from './AnswersList.module.scss';
 
@@ -9,6 +9,7 @@ const AnswersList = props => (
         <AnswerItem 
           key={index} answer={answer}
           onAnswerClick={props.onAnswerClick}
+          state={props.state ? props.state[answer.id] : null}
         />
       )
     }) }

@@ -4,4 +4,12 @@
   border-radius: 5px;
   padding: 10px;
   cursor: pointer;
+
+  &.success {
+    background-color: green;
+  }
+
+  &.error {
+    background-color: red;
+  }
 }

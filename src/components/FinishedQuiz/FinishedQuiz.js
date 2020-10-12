@@ -1,5 +1,7 @@
-import React from 'react';
-import classes from './FinishedQuiz.module.scss';
+import React from 'react'
+import classes from './FinishedQuiz.css'
+import Button from '../UI/Button/Button'
+import {Link} from 'react-router-dom'
 
 const FinishedQuiz = props => {
   const successCount = Object.keys(props.results).reduce((total, key) => {
@@ -9,31 +11,41 @@ const FinishedQuiz = props => {
 
     return total
   }, 0)
+
+
   return (
     <div className={classes.FinishedQuiz}>
       <ul>
-        { props.quiz.map((item, index) => {
+        { props.quiz.map((quizItem, index) => {
           const cls = [
-            'status',
-            props.results[item.id] === 'error' ? 'error' : 'success',
-            classes[props.results[item.id]]
-          ];
+            'fa',
+            props.results[quizItem.id] === 'error' ? 'fa-times' : 'fa-check',
+            classes[props.results[quizItem.id]]
+          ]
+
           return (
-            <li key={index}>
-              <span>{index + 1}.</span>
-              {item.question}
-              <span className={cls.join(' ')}>WRONG</span>
+            <li
+              key={index}
+            >
+              <strong>{index + 1}</strong>.&nbsp;
+              {quizItem.question}
+              <i className={cls.join(' ')} />
             </li>
           )
+
         }) }
       </ul>
 
       <p>Правильно {successCount} из {props.quiz.length}</p>
+
       <div>
-        <button onClick={props.retry}>Повторить</button>
+        <Button onClick={props.onRetry} type="primary">Повторить</Button>
+        <Link to="/">
+          <Button type="success">Перейти в список тестов</Button>
+        </Link>
       </div>
     </div>
   )
 }
 
-export default FinishedQuiz;
+export default FinishedQuiz

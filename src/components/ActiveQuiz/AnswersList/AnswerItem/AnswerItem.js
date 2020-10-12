@@ -1,5 +1,5 @@
-import React from 'react';
-import classes from './AnswerItem.module.scss';
+import React from 'react'
+import classes from './AnswerItem.css'
 
 const AnswerItem = props => {
   const cls = [classes.AnswerItem]
@@ -9,14 +9,13 @@ const AnswerItem = props => {
   }
 
   return (
-    <li 
-      className={cls.join(' ')} 
-      onClick = {() => props.onAnswerClick(props.answer.id)}
+    <li
+      className={cls.join(' ')}
+      onClick={() => props.onAnswerClick(props.answer.id)}
     >
-      {props.answer.text}
+      { props.answer.text }
     </li>
   )
 }
 
-
-export default AnswerItem;
+export default AnswerItem

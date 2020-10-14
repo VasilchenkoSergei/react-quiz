@@ -12,28 +12,28 @@ export default class Auth extends Component {
       email: {
         value: '',
         type: 'email',
-        label: 'email',
+        label: 'Email',
         errorMessage: 'Введите корректный email',
         valid: false,
         touched: false,
         validation: {
           required: true,
-          email: true,
-        },
+          email: true
+        }
       },
       password: {
         value: '',
         type: 'password',
-        label: 'password',
-        errorMessage: 'Введите корректный password',
+        label: 'Пароль',
+        errorMessage: 'Введите корректный пароль',
         valid: false,
         touched: false,
         validation: {
           required: true,
-          minLength: 6,
-        },
-      },
-    },
+          minLength: 6
+        }
+      }
+    }
   }
 
   loginHandler = () => {
@@ -48,45 +48,43 @@ export default class Auth extends Component {
     event.preventDefault()
   }
 
-  validateControl = (value, validation) => {
+  validateControl(value, validation) {
     if (!validation) {
       return true
     }
 
-    let isValid = true;
+    let isValid = true
 
     if (validation.required) {
-      isValid = value.trim() !== '' && isValid;
+      isValid = value.trim() !== '' && isValid
     }
 
     if (validation.email) {
-      isValid = is.email(value) && isValid;
+      isValid = is.email(value) && isValid
     }
 
     if (validation.minLength) {
-      isValid = value.length >= validation.minLength && isValid;
+      isValid = value.length >= validation.minLength && isValid
     }
 
-    return isValid;
+    return isValid
   }
 
   onChangeHandler = (event, controlName) => {
-    console.log(event.target.value);
+    const formControls = { ...this.state.formControls }
+    const control = { ...formControls[controlName] }
 
-    const formControls = { ...this.state.formControls };
-    const control = { ...formControls[controlName] };
+    control.value = event.target.value
+    control.touched = true
+    control.valid = this.validateControl(control.value, control.validation)
 
-    control.value = event.target.value;
-    control.touched = true;
-    control.valid = this.validateControl(control.value, control.validation);
+    formControls[controlName] = control
 
-    formControls[controlName] = control;
-    let isFormValid = true;
+    let isFormValid = true
 
-    Object.keys(formControls).forEach((name) => {
+    Object.keys(formControls).forEach(name => {
       isFormValid = formControls[name].valid && isFormValid
-    });
-    console.log(Object.keys(formControls));
+    })
 
     this.setState({
       formControls, isFormValid
@@ -95,15 +93,15 @@ export default class Auth extends Component {
 
   renderInputs() {
     return Object.keys(this.state.formControls).map((controlName, index) => {
-      const control = this.state.formControls[controlName];
+      const control = this.state.formControls[controlName]
       return (
         <Input
           key={controlName + index}
           type={control.type}
-          label={control.label}
           value={control.value}
           valid={control.valid}
           touched={control.touched}
+          label={control.label}
           shouldValidate={!!control.validation}
           errorMessage={control.errorMessage}
           onChange={event => this.onChangeHandler(event, controlName)}
